@@ -1,3 +1,4 @@
+import 'package:bloc_auth/core/error/custom_exceptions.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:bloc_auth/core/error/failuer.dart';
@@ -22,13 +23,34 @@ class INumberTriviaRepository implements NumberTriviaRepository {
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
     int number,
   ) async {
-    networkInfo.isConnected;
-    return const Right(NumberTrivia(text: "text", number: 1));
+    final isConnected = await networkInfo.isConnected;
+    if (isConnected) {
+      try {
+        final remoteConcreteTrivia =
+            await numberTriviaRemoteDatasource.getConcreteNumberTrivia(number);
+        await numberTriviaLocalDatasource
+            .cacheNumberTrivia(remoteConcreteTrivia);
+        return Right(remoteConcreteTrivia);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localConcreteTrivia =
+            await numberTriviaLocalDatasource.getLastNumberTrivia();
+        return Right(localConcreteTrivia);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
   }
 
   @override
   Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() async {
-    networkInfo.isConnected;
-    return const Right(NumberTrivia(text: "text", number: 1));
+    await networkInfo.isConnected;
+    final remoteRandomTrivia =
+        await numberTriviaRemoteDatasource.getRandomNumberTrivia();
+    await numberTriviaLocalDatasource.cacheNumberTrivia(remoteRandomTrivia);
+    return Right(remoteRandomTrivia);
   }
 }

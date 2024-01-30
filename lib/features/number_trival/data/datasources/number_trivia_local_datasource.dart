@@ -4,7 +4,8 @@ abstract class NumberTriviaLocalDatasource {
   /// Get the cache [NumberTriviaModel] which gotten the last time.
   ///
   /// Throws a [NoLocalDataException] for all err codes.
-  Future<NumberTriviaModel> getLastNumberTrivia(int number);
+  Future<NumberTriviaModel> getLastNumberTrivia();
 
-  Future<void> cacheNumberTrivia();
+  /// cache number trivia
+  Future<void> cacheNumberTrivia(NumberTriviaModel numberTriviaModel);
 }
