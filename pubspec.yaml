@@ -27,6 +27,7 @@ dependencies:
   http: ^1.1.2
   shared_preferences: ^2.2.2
   connectivity_plus: ^5.0.2
+  data_connection_checker_nulls: ^0.0.2
   # mockito: ^5.4.4
   bloc_test: ^9.1.5
   dartz: ^0.10.1
