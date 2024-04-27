@@ -1,3 +1,6 @@
+import 'package:bloc_auth/features/number_trival/domain/entities/number_tivia.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -14,11 +17,14 @@ class MockRandomNumberTrivia extends Mock implements GetRandomNumberTrivia {}
 class MockInputConverter extends Mock implements InputConverter {}
 
 void main() {
-  late GetConcreteNumberTrivia getConcreteNumberTrivia;
-  late GetRandomNumberTrivia getRandomNumberTrivia;
-  late InputConverter inputConverter;
+  late MockConcreteNumberTrivia getConcreteNumberTrivia;
+  late MockRandomNumberTrivia getRandomNumberTrivia;
+  late MockInputConverter inputConverter;
 
   late NumberTriviaBloc numberTriviaBloc;
+
+  const tNumberString = '1';
+  const tNumberParsed = 1;
 
   setUp(() {
     getConcreteNumberTrivia = MockConcreteNumberTrivia();
@@ -37,5 +43,113 @@ void main() {
       // assert
       expect(numberTriviaBloc.state, equals(const InitialNumberTriviaState()));
     });
+  });
+
+  group("GetTriviaForConcreteNumber", () {
+    test(
+        "should call the input converter to validate and convert the string to an unsigned",
+        () async {
+      // arrange
+      when(
+        () => inputConverter.stringToUnsignedInteger(any()),
+      ).thenReturn(
+        const Right(tNumberParsed),
+      );
+
+      // act
+      numberTriviaBloc.add(
+        GetConcreteNumberTriviaEvent(numberString: tNumberString),
+      );
+      // important: wait till method called
+      await untilCalled(() => inputConverter.stringToUnsignedInteger(any()));
+
+      // assert
+      verify(() => inputConverter.stringToUnsignedInteger(tNumberString));
+    });
+
+    test("should emit [Error] when input is invalid", () async {
+      // arrange
+      when(
+        () => inputConverter.stringToUnsignedInteger(any()),
+      ).thenReturn(
+        Left(InvalidInputFailure()),
+      );
+
+      // act
+      numberTriviaBloc.add(
+        GetConcreteNumberTriviaEvent(numberString: tNumberString),
+      );
+      await untilCalled(() => inputConverter.stringToUnsignedInteger(any()));
+
+      // assert
+      verify(() => inputConverter.stringToUnsignedInteger(tNumberString));
+      expect(
+        numberTriviaBloc.state,
+        const ErrorNumberTriviaState(errMsg: 'Invalid input'),
+      );
+    });
+  });
+
+  group("test number trivia bloc - with bloc test - ", () {
+    const tNumberTrivia = NumberTrivia(text: 'test number', number: 1);
+    // const tNumberTriviaExt = NumberTrivia(text: 'test number ext', number: 2);
+
+    blocTest(
+      "test intial state",
+      build: () => NumberTriviaBloc(
+        getConcreteNumberTrivia: getConcreteNumberTrivia,
+        getRandomNumberTrivia: getRandomNumberTrivia,
+        inputConverter: inputConverter,
+      ),
+      expect: () => <NumberTriviaState>[],
+    );
+
+    blocTest(
+      "test invalid input",
+      setUp: () {
+        when(
+          () => inputConverter.stringToUnsignedInteger(any()),
+        ).thenReturn(
+          Left(InvalidInputFailure()),
+        );
+      },
+      build: () => NumberTriviaBloc(
+        getConcreteNumberTrivia: getConcreteNumberTrivia,
+        getRandomNumberTrivia: getRandomNumberTrivia,
+        inputConverter: inputConverter,
+      ),
+      act: (bloc) => bloc.add(
+        GetConcreteNumberTriviaEvent(numberString: tNumberString),
+      ),
+      expect: () => <NumberTriviaState>[
+        const ErrorNumberTriviaState(errMsg: 'Invalid input'),
+      ],
+    );
+
+    blocTest(
+      "test emit concrete number trvia",
+      setUp: () {
+        when(
+          () => inputConverter.stringToUnsignedInteger(any()),
+        ).thenReturn(
+          const Right(tNumberParsed),
+        );
+
+        when(
+          () => getConcreteNumberTrivia(const MyParams(number: tNumberParsed)),
+        ).thenAnswer((invocation) async => const Right(tNumberTrivia));
+      },
+      build: () => NumberTriviaBloc(
+        getConcreteNumberTrivia: getConcreteNumberTrivia,
+        getRandomNumberTrivia: getRandomNumberTrivia,
+        inputConverter: inputConverter,
+      ),
+      act: (bloc) => bloc.add(
+        GetConcreteNumberTriviaEvent(numberString: tNumberString),
+      ),
+      expect: () => <NumberTriviaState>[
+        const LoadedNumberTriviaState(trivia: tNumberTrivia),
+      ],
+    );
   });
 }
