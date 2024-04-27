@@ -1,3 +1,4 @@
+import 'package:bloc_auth/features/number_trival/presentation/view/number_trivia_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthApp extends StatelessWidget {
@@ -13,7 +14,7 @@ class AuthApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: Container(),
+      home: const NumberTriviaPage(),
     );
   }
 }

@@ -1,6 +1,7 @@
-import 'package:bloc_auth/features/number_trival/data/models/number_trivia_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
+import 'package:bloc_auth/features/number_trival/domain/entities/number_tivia.dart';
 
 @immutable
 sealed class NumberTriviaState extends Equatable {
@@ -38,17 +39,28 @@ class LoadingNumberTriviaState implements NumberTriviaState {
 }
 
 class LoadedNumberTriviaState implements NumberTriviaState {
-  final NumberTriviaModel trivia;
+  final NumberTrivia trivia;
 
   const LoadedNumberTriviaState({
     required this.trivia,
   }) : super();
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [trivia];
 
   @override
   bool? get stringify => true;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is LoadedNumberTriviaState &&
+      other.trivia == trivia;
+  }
+
+  @override
+  int get hashCode => trivia.hashCode;
 }
 
 class ErrorNumberTriviaState implements NumberTriviaState {
@@ -59,7 +71,7 @@ class ErrorNumberTriviaState implements NumberTriviaState {
   }) : super();
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [errMsg];
 
   @override
   bool? get stringify => true;

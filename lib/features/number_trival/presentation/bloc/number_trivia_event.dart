@@ -6,10 +6,10 @@ sealed class NumberTriviaEvent extends Equatable {
   const NumberTriviaEvent();
 }
 
-class GetTriviaForConcreteNumber implements NumberTriviaEvent {
+class GetConcreteNumberTriviaEvent implements NumberTriviaEvent {
   final String numberString;
 
-  GetTriviaForConcreteNumber({
+  GetConcreteNumberTriviaEvent({
     required this.numberString,
   }) : super();
 
@@ -22,8 +22,8 @@ class GetTriviaForConcreteNumber implements NumberTriviaEvent {
   bool? get stringify => false;
 }
 
-class GetTriviaForRandomNumber implements NumberTriviaEvent {
-  GetTriviaForRandomNumber() : super();
+class GetRandomNumberTriviaEvent implements NumberTriviaEvent {
+  GetRandomNumberTriviaEvent() : super();
 
   @override
   List<Object?> get props => [];
