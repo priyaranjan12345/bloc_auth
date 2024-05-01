@@ -29,8 +29,7 @@ void main() {
     );
 
     // act
-    final result =
-        await getConcreteNumberTrivia(const MyParams(number: tNumber));
+    final result = await getConcreteNumberTrivia(const Params(number: tNumber));
 
     // assert
     expect(result, const Right(tNumberTrivia));

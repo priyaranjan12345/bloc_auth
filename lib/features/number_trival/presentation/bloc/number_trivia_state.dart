@@ -6,6 +6,9 @@ import 'package:bloc_auth/features/number_trival/domain/entities/number_tivia.da
 @immutable
 sealed class NumberTriviaState extends Equatable {
   const NumberTriviaState();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class InitialNumberTriviaState implements NumberTriviaState {
@@ -75,4 +78,15 @@ class ErrorNumberTriviaState implements NumberTriviaState {
 
   @override
   bool? get stringify => true;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is ErrorNumberTriviaState &&
+      other.errMsg == errMsg;
+  }
+
+  @override
+  int get hashCode => errMsg.hashCode;
 }

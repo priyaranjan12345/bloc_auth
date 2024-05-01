@@ -20,35 +20,60 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   }) : super(const InitialNumberTriviaState()) {
     /// Concrete Number Trivia
     on<GetConcreteNumberTriviaEvent>((event, emit) {
+      /// loading...
+      emit(const LoadingNumberTriviaState());
+
+      /// evaluate result
       final result = inputConverter.stringToUnsignedInteger(event.numberString);
+
       result.fold((failure) {
-        emit(const ErrorNumberTriviaState(errMsg: 'Invalid input'));
+        emit(ErrorNumberTriviaState(errMsg: _mapFailureToMessage(failure)));
       }, (number) async {
         final concreteNumberTrivia = await getConcreteNumberTrivia(
-          MyParams(number: number),
+          Params(number: number),
         );
-        emitState(concreteNumberTrivia, emit);
+        _emitState(concreteNumberTrivia, emit);
       });
     });
 
     /// Random Number Trivia
     on<GetRandomNumberTriviaEvent>((event, emit) async {
+      /// loading...
+      emit(const LoadingNumberTriviaState());
+
+      /// evaluate result
       final randomNumberTrivia = await getRandomNumberTrivia(NoParams());
-      emitState(randomNumberTrivia, emit);
+      _emitState(randomNumberTrivia, emit);
     });
   }
 
-  void emitState(
+  void _emitState(
     Either<Failure, NumberTrivia> numberTriviaResult,
     Emitter<NumberTriviaState> emit,
   ) {
     numberTriviaResult.fold(
       (failure) => emit(
-        const ErrorNumberTriviaState(errMsg: 'Failed to get data'),
+        ErrorNumberTriviaState(errMsg: _mapFailureToMessage(failure)),
       ),
       (numberTrivia) => emit(
         LoadedNumberTriviaState(trivia: numberTrivia),
       ),
     );
+  }
+
+  String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return 'Server error';
+
+      case CacheFailure:
+        return 'Cache error';
+
+      case InvalidInputFailure:
+        return 'Invalid input';
+
+      default:
+        return 'Unexpected error';
+    }
   }
 }
