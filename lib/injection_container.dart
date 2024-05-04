@@ -1,4 +1,5 @@
 import 'package:data_connection_checker_nulls/data_connection_checker_nulls.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +17,8 @@ import 'features/number_trival/data/datasources/number_trivia_remote_datasource.
 final injector = GetIt.instance;
 
 Future<void> init() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   //* Bloc register
   injector.registerFactory(
     () => NumberTriviaBloc(
