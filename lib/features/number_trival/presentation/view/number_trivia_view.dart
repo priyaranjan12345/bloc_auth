@@ -3,10 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/bloc.dart';
 
-class NumberTriviaView extends StatelessWidget {
+class NumberTriviaView extends StatefulWidget {
   const NumberTriviaView({super.key});
 
-  TextEditingController get textController => TextEditingController();
+  @override
+  State<NumberTriviaView> createState() => _NumberTriviaViewState();
+}
+
+class _NumberTriviaViewState extends State<NumberTriviaView> {
+  final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +21,7 @@ class NumberTriviaView extends StatelessWidget {
         vertical: 10,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
             builder: (context, state) => switch (state) {
@@ -23,9 +29,20 @@ class NumberTriviaView extends StatelessWidget {
               LoadingNumberTriviaState() => const Center(
                   child: CircularProgressIndicator.adaptive(),
                 ),
-              LoadedNumberTriviaState() => Text(
-                  "Result: ${state.trivia.number} ${state.trivia.text}",
-                  style: Theme.of(context).textTheme.displayMedium,
+              LoadedNumberTriviaState() => RichText(
+                  text: TextSpan(
+                    text: 'Result: ',
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '${state.trivia.number}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(text: ' ${state.trivia.text}!'),
+                    ],
+                  ),
                 ),
               EmptyNumberTriviaState() => Text(
                   "Result: empty",
@@ -47,7 +64,7 @@ class NumberTriviaView extends StatelessWidget {
           const SizedBox(height: 40),
           Row(
             children: [
-              Flexible(
+              Expanded(
                 flex: 1,
                 child: FilledButton(
                   onPressed: () {
@@ -60,7 +77,8 @@ class NumberTriviaView extends StatelessWidget {
                   child: const Text("Concrete"),
                 ),
               ),
-              Flexible(
+              const SizedBox(width: 20),
+              Expanded(
                 flex: 1,
                 child: ElevatedButton(
                   onPressed: () {
@@ -78,3 +96,8 @@ class NumberTriviaView extends StatelessWidget {
     );
   }
 }
+
+// Text(
+//                   "Result: ${state.trivia.number} ${state.trivia.text}",
+//                   style: Theme.of(context).textTheme.displayMedium,
+//                 )
