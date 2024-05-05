@@ -19,14 +19,14 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     required this.inputConverter,
   }) : super(const InitialNumberTriviaState()) {
     /// Concrete Number Trivia
-    on<GetConcreteNumberTriviaEvent>((event, emit) {
+    on<GetConcreteNumberTriviaEvent>((event, emit) async {
       /// loading...
       emit(const LoadingNumberTriviaState());
 
       /// evaluate result
       final result = inputConverter.stringToUnsignedInteger(event.numberString);
 
-      result.fold((failure) {
+      await result.fold((failure) {
         emit(ErrorNumberTriviaState(errMsg: _mapFailureToMessage(failure)));
       }, (number) async {
         final concreteNumberTrivia = await getConcreteNumberTrivia(
