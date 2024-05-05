@@ -10,8 +10,7 @@ void main() {
   });
 
   group("stringToUnsignedInt", () {
-    test("should return int when string represents a unsigned integer",
-        () async {
+    test("should return int when string represents a unsigned integer", () async {
       // arrange
       const str = '123';
 
@@ -21,9 +20,8 @@ void main() {
       // assert
       expect(result, const Right(123));
     });
-    
-    test("should return failure when string represents not a unsigned integer",
-        () async {
+
+    test("should return failure when string represents not a unsigned integer", () async {
       // arrange
       const str = 'abc';
 
@@ -34,8 +32,7 @@ void main() {
       expect(result, Left(InvalidInputFailure()));
     });
 
-    test("should return failure when string represents not a -ve integer",
-        () async {
+    test("should return failure when string represents not a -ve integer", () async {
       // arrange
       const str = '-123';
 

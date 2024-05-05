@@ -61,8 +61,7 @@ void main() {
       final call = remoteDatasource.getConcreteNumberTrivia;
 
       // assert
-      expect(() async => await call(tNumber),
-          throwsA(const TypeMatcher<ServerException>()));
+      expect(() async => await call(tNumber), throwsA(const TypeMatcher<ServerException>()));
     });
 
     test("should perform a GET request for random number", () async {
@@ -87,8 +86,7 @@ void main() {
       final call = remoteDatasource.getRandomNumberTrivia;
 
       // assert
-      expect(() async => await call(),
-          throwsA(const TypeMatcher<ServerException>()));
+      expect(() async => await call(), throwsA(const TypeMatcher<ServerException>()));
     });
   });
 }

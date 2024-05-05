@@ -10,8 +10,7 @@ import 'package:bloc_auth/features/number_trival/presentation/bloc/bloc.dart';
 import 'package:bloc_auth/features/number_trival/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:bloc_auth/features/number_trival/domain/usecases/get_random_number_trivia.dart';
 
-class MockConcreteNumberTrivia extends Mock
-    implements GetConcreteNumberTrivia {}
+class MockConcreteNumberTrivia extends Mock implements GetConcreteNumberTrivia {}
 
 class MockRandomNumberTrivia extends Mock implements GetRandomNumberTrivia {}
 
@@ -48,8 +47,7 @@ void main() {
 
   group("GetTriviaForConcreteNumber", () {
     const tNumberTrivia = NumberTrivia(text: 'test number ext', number: 2);
-    test(
-        "should call the input converter to validate and convert the string to an unsigned",
+    test("should call the input converter to validate and convert the string to an unsigned",
         () async {
       // arrange
       when(
@@ -97,8 +95,7 @@ void main() {
       );
     });
 
-    test("should emit [loading, loaded] state when data is gotten successfully",
-        () async {
+    test("should emit [loading, loaded] state when data is gotten successfully", () async {
       // arrange
       when(
         () => inputConverter.stringToUnsignedInteger(any()),
@@ -155,8 +152,7 @@ void main() {
       },
     );
 
-    test(
-        'should emit [loading, serverError] state, on server error but valid input number string',
+    test('should emit [loading, serverError] state, on server error but valid input number string',
         () {
       // arrange
       when(
@@ -231,9 +227,7 @@ void main() {
     });
   });
 
-  group(
-      "test number trivia bloc for concrete number trivia - with bloc test - ",
-      () {
+  group("test number trivia bloc for concrete number trivia - with bloc test - ", () {
     const tNumberTrivia = NumberTrivia(text: 'test number', number: 1);
     // const tNumberTriviaExt = NumberTrivia(text: 'test number ext', number: 2);
 
@@ -336,7 +330,7 @@ void main() {
       "should emits [loading, error] state",
       setUp: () => when(
         () => getRandomNumberTrivia(NoParams()),
-      ).thenAnswer((invocation) async =>Left(ServerFailure())),
+      ).thenAnswer((invocation) async => Left(ServerFailure())),
       build: () => NumberTriviaBloc(
         getConcreteNumberTrivia: getConcreteNumberTrivia,
         getRandomNumberTrivia: getRandomNumberTrivia,

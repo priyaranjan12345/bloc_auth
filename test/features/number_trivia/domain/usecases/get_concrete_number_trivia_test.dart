@@ -5,8 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockNumberTriviaRepository extends Mock
-    implements NumberTriviaRepository {}
+class MockNumberTriviaRepository extends Mock implements NumberTriviaRepository {}
 
 void main() {
   late MockNumberTriviaRepository mockNumberTriviaRepository;
@@ -23,8 +22,7 @@ void main() {
   const tNumberTrivia = NumberTrivia(text: "test", number: tNumber);
   test("should get trivia number from repository", () async {
     // arrange
-    when(() => mockNumberTriviaRepository.getConcreteNumberTrivia(any()))
-        .thenAnswer(
+    when(() => mockNumberTriviaRepository.getConcreteNumberTrivia(any())).thenAnswer(
       (_) async => const Right(tNumberTrivia),
     );
 

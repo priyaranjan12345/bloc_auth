@@ -25,15 +25,13 @@ void main() {
 
   group("getLastNumberTrivia", () {
     final fixtureString = fixture("trivia_cache.json");
-    final tNumberTriviaModel =
-        NumberTriviaModel.fromJson(json.decode(fixtureString));
+    final tNumberTriviaModel = NumberTriviaModel.fromJson(json.decode(fixtureString));
 
     test(
       "should return NumbeTrivia from SharedPreferences when there is one in the cache",
       () async {
         // arrange
-        when(() => sharedPreferences.getString(cacheKey))
-            .thenAnswer((_) => fixtureString);
+        when(() => sharedPreferences.getString(cacheKey)).thenAnswer((_) => fixtureString);
 
         // act
         final result = await localDatasource.getLastNumberTrivia();
@@ -48,15 +46,13 @@ void main() {
       "should return CacheException when there is not cached value",
       () async {
         // arrange
-        when(() => sharedPreferences.getString(cacheKey))
-            .thenAnswer((_) => null);
+        when(() => sharedPreferences.getString(cacheKey)).thenAnswer((_) => null);
 
         // act
         final call = localDatasource.getLastNumberTrivia;
 
         // assert
-        expect(() async => await call(),
-            throwsA(const TypeMatcher<CacheException>()));
+        expect(() async => await call(), throwsA(const TypeMatcher<CacheException>()));
       },
     );
   });
@@ -65,8 +61,7 @@ void main() {
     const tNumberTriviaModel = NumberTriviaModel(text: "test-text", number: 1);
     test("should return void on save cache", () async {
       // arrange
-      when(() => sharedPreferences.setString(cacheKey, any()))
-          .thenAnswer((_) async => true);
+      when(() => sharedPreferences.setString(cacheKey, any())).thenAnswer((_) async => true);
 
       // act
       await localDatasource.cacheNumberTrivia(tNumberTriviaModel);
@@ -82,15 +77,14 @@ void main() {
 
     test("should throw CacheException when failed to save data", () async {
       // arrange
-      when(() => sharedPreferences.setString(cacheKey, any()))
-          .thenAnswer((_) async => false);
+      when(() => sharedPreferences.setString(cacheKey, any())).thenAnswer((_) async => false);
 
       // act
       final call = localDatasource.cacheNumberTrivia;
 
       // assert
-      expect(() async => await call(tNumberTriviaModel),
-          throwsA(const TypeMatcher<CacheException>()));
+      expect(
+          () async => await call(tNumberTriviaModel), throwsA(const TypeMatcher<CacheException>()));
     });
   });
 }

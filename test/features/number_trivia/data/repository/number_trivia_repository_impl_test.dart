@@ -9,8 +9,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockRemoteDataSource extends Mock
-    implements NumberTriviaRemoteDatasource {}
+class MockRemoteDataSource extends Mock implements NumberTriviaRemoteDatasource {}
 
 class MockLocalDataSource extends Mock implements NumberTriviaLocalDatasource {}
 
@@ -103,8 +102,7 @@ void main() {
           });
 
           // act
-          final result =
-              await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
+          final result = await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
 
           // assert
           verify(
@@ -129,8 +127,7 @@ void main() {
           });
 
           // act
-          final result =
-              await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
+          final result = await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
 
           // assert
           verify(
@@ -159,8 +156,7 @@ void main() {
 
           // assert
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
-          verify(
-              () => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
+          verify(() => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
         },
       );
     });
@@ -178,8 +174,7 @@ void main() {
               .thenAnswer((_) async => tNumberTriviaModel);
 
           // act
-          final result =
-              await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
+          final result = await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
 
           // assert
           verifyZeroInteractions(mockRemoteDataSource);
@@ -192,12 +187,10 @@ void main() {
         "should return cache failure when there is no cache data present",
         () async {
           // arrange
-          when(() => mockLocalDataSource.getLastNumberTrivia())
-              .thenThrow(CacheException());
+          when(() => mockLocalDataSource.getLastNumberTrivia()).thenThrow(CacheException());
 
           // act
-          final result =
-              await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
+          final result = await iNumberTriviaRepository.getConcreteNumberTrivia(tNumber);
 
           // assert
           verifyZeroInteractions(mockRemoteDataSource);
@@ -305,8 +298,7 @@ void main() {
 
           // assert
           verify(() => mockRemoteDataSource.getRandomNumberTrivia());
-          verify(
-              () => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
+          verify(() => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
         },
       );
     });
@@ -333,8 +325,7 @@ void main() {
         "should return cache failure when there is no cache data present",
         () async {
           // arrange
-          when(() => mockLocalDataSource.getLastNumberTrivia())
-              .thenThrow(CacheException());
+          when(() => mockLocalDataSource.getLastNumberTrivia()).thenThrow(CacheException());
 
           // act
           final result = await iNumberTriviaRepository.getRandomNumberTrivia();

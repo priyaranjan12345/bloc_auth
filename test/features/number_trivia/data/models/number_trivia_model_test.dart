@@ -20,8 +20,7 @@ void main() {
   group("from json test", () {
     test("should return valid number trivia model from json", () async {
       // arrange
-      final Map<String, dynamic> jsonMap =
-          json.decode(fixture('trivia_int.json'));
+      final Map<String, dynamic> jsonMap = json.decode(fixture('trivia_int.json'));
 
       // act
       final result = NumberTriviaModel.fromJson(jsonMap);
@@ -30,11 +29,9 @@ void main() {
       expect(result, equals(tNumberTriviaModel));
     });
 
-    test("should return valid number trivia model from json with double number",
-        () async {
+    test("should return valid number trivia model from json with double number", () async {
       // arrange
-      final Map<String, dynamic> jsonMap =
-          json.decode(fixture('trivia_double.json'));
+      final Map<String, dynamic> jsonMap = json.decode(fixture('trivia_double.json'));
 
       // act
       final result = NumberTriviaModel.fromJson(jsonMap);

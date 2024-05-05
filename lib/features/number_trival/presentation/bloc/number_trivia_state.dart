@@ -57,9 +57,8 @@ class LoadedNumberTriviaState implements NumberTriviaState {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is LoadedNumberTriviaState &&
-      other.trivia == trivia;
+
+    return other is LoadedNumberTriviaState && other.trivia == trivia;
   }
 
   @override
@@ -82,9 +81,8 @@ class ErrorNumberTriviaState implements NumberTriviaState {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is ErrorNumberTriviaState &&
-      other.errMsg == errMsg;
+
+    return other is ErrorNumberTriviaState && other.errMsg == errMsg;
   }
 
   @override

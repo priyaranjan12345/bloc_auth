@@ -17,8 +17,7 @@ void main() {
   });
 
   group("is connected", () {
-    test("should forward the call to DataConnectionChecker.hasConnection",
-        () async {
+    test("should forward the call to DataConnectionChecker.hasConnection", () async {
       // arrange
       const tHasConnection = true;
       when(

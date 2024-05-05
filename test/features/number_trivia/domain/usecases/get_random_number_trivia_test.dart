@@ -5,8 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockNumberTriviaRepository extends Mock
-    implements NumberTriviaRepository {}
+class MockNumberTriviaRepository extends Mock implements NumberTriviaRepository {}
 
 void main() {
   late GetRandomNumberTrivia usecase;
