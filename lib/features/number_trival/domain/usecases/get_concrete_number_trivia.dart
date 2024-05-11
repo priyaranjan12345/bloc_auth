@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import '../../../../core/error/failuer.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../entities/number_tivia.dart';
-import '../repositories/number_trivia_repository.dart';
+import '../repositories/repositories.dart';
 
 class GetConcreteNumberTrivia implements UseCase<NumberTrivia, Params> {
   final NumberTriviaRepository repository;

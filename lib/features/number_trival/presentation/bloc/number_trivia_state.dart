@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import 'package:bloc_auth/features/number_trival/domain/entities/number_tivia.dart';
+import '../../domain/entities/entities.dart';
 
 @immutable
 sealed class NumberTriviaState extends Equatable {

@@ -1,13 +1,12 @@
-import 'package:bloc_auth/core/error/custom_exceptions.dart';
-import 'package:bloc_auth/features/number_trival/data/models/number_trivia_model.dart';
 import 'package:dartz/dartz.dart';
 
-import 'package:bloc_auth/core/error/failuer.dart';
-import 'package:bloc_auth/core/network/network_info.dart';
-import 'package:bloc_auth/features/number_trival/data/datasources/number_trivia_local_datasource.dart';
-import 'package:bloc_auth/features/number_trival/data/datasources/number_trivia_remote_datasource.dart';
-import 'package:bloc_auth/features/number_trival/domain/entities/number_tivia.dart';
-import 'package:bloc_auth/features/number_trival/domain/repositories/number_trivia_repository.dart';
+import '../../../../core/error/custom_exceptions.dart';
+import '../../../../core/error/failuer.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/entities.dart';
+import '../../domain/repositories/repositories.dart';
+import '../datasources/datasources.dart';
+import '../models/models.dart';
 
 typedef _ConcreateOrRandomChooser = Future<NumberTriviaModel> Function();
 
@@ -52,7 +51,8 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
       }
     } else {
       try {
-        final localConcreteTrivia = await numberTriviaLocalDatasource.getLastNumberTrivia();
+        final localConcreteTrivia =
+            await numberTriviaLocalDatasource.getLastNumberTrivia();
         return Right(localConcreteTrivia);
       } on CacheException {
         return Left(CacheFailure());
