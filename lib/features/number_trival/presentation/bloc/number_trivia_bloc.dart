@@ -1,8 +1,7 @@
 import 'package:bloc_auth/core/error/failuer.dart';
 import 'package:bloc_auth/core/utils/input_converter.dart';
 import 'package:bloc_auth/features/number_trival/domain/entities/number_tivia.dart';
-import 'package:bloc_auth/features/number_trival/domain/usecases/get_concrete_number_trivia.dart';
-import 'package:bloc_auth/features/number_trival/domain/usecases/get_random_number_trivia.dart';
+import 'package:bloc_auth/features/number_trival/domain/usecases/usecases.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Failure extends Equatable {
-  final List properties;
+  final List<Object?> properties;
 
   const Failure({
     this.properties = const <dynamic>[],
