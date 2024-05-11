@@ -7,12 +7,10 @@ import 'package:http/http.dart' as http;
 import 'core/network/network_info.dart';
 import 'core/utils/input_converter.dart';
 import 'features/number_trival/presentation/bloc/bloc.dart';
-import 'features/number_trival/domain/usecases/get_random_number_trivia.dart';
-import 'features/number_trival/domain/usecases/get_concrete_number_trivia.dart';
-import 'features/number_trival/domain/repositories/number_trivia_repository.dart';
-import 'features/number_trival/data/repositories/number_trivia_repository_impl.dart';
-import 'features/number_trival/data/datasources/number_trivia_local_datasource.dart';
-import 'features/number_trival/data/datasources/number_trivia_remote_datasource.dart';
+import 'features/number_trival/domain/usecases/usecases.dart';
+import 'features/number_trival/domain/repositories/repositories.dart';
+import 'features/number_trival/data/repositories/repositories.dart';
+import 'features/number_trival/data/datasources/datasources.dart';
 
 final injector = GetIt.instance;
 

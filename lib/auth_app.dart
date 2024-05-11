@@ -1,5 +1,6 @@
-import 'package:bloc_auth/features/number_trival/presentation/view/number_trivia_page.dart';
 import 'package:flutter/material.dart';
+
+import 'features/number_trival/presentation/view/view.dart';
 
 class AuthApp extends StatelessWidget {
   const AuthApp({super.key});
