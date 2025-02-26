@@ -28,7 +28,7 @@ void main() {
     final result = await usecase(NoParams());
 
     // assert
-    expect(result, const Right(tNumberTrivia));
+    expect(result, const Right<dynamic, NumberTrivia>(tNumberTrivia));
     verify(() => mockNumberTriviaRepository.getRandomNumberTrivia());
     verifyNoMoreInteractions(mockNumberTriviaRepository);
   });

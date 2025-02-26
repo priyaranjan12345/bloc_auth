@@ -231,7 +231,7 @@ void main() {
     const tNumberTrivia = NumberTrivia(text: 'test number', number: 1);
     // const tNumberTriviaExt = NumberTrivia(text: 'test number ext', number: 2);
 
-    blocTest(
+    blocTest<NumberTriviaBloc, NumberTriviaState>(
       "test intial state",
       build: () => NumberTriviaBloc(
         getConcreteNumberTrivia: getConcreteNumberTrivia,
@@ -241,7 +241,7 @@ void main() {
       expect: () => <NumberTriviaState>[],
     );
 
-    blocTest(
+    blocTest<NumberTriviaBloc, NumberTriviaState>(
       "test invalid input",
       setUp: () {
         when(
@@ -264,7 +264,7 @@ void main() {
       ],
     );
 
-    blocTest(
+    blocTest<NumberTriviaBloc, NumberTriviaState>(
       "test emit concrete number trvia",
       setUp: () {
         when(
@@ -297,7 +297,7 @@ void main() {
 
   group('test numberTriviaBloc for randomNumberTrivia - with blic test', () {
     const tNumberTrivia = NumberTrivia(text: 'test number ext', number: 2);
-    blocTest(
+    blocTest<NumberTriviaBloc, NumberTriviaState>(
       "should emits [intial] state",
       build: () => NumberTriviaBloc(
         getConcreteNumberTrivia: getConcreteNumberTrivia,
@@ -307,7 +307,7 @@ void main() {
       expect: () => <NumberTriviaState>[],
     );
 
-    blocTest(
+    blocTest<NumberTriviaBloc, NumberTriviaState>(
       "should emits [loading, loaded] state",
       setUp: () => when(
         () => getRandomNumberTrivia(NoParams()),
@@ -326,7 +326,7 @@ void main() {
       ],
     );
 
-    blocTest(
+    blocTest<NumberTriviaBloc, NumberTriviaState>(
       "should emits [loading, error] state",
       setUp: () => when(
         () => getRandomNumberTrivia(NoParams()),

@@ -30,7 +30,7 @@ void main() {
     final result = await getConcreteNumberTrivia(const Params(number: tNumber));
 
     // assert
-    expect(result, const Right(tNumberTrivia));
+    expect(result, const Right<dynamic, NumberTrivia>(tNumberTrivia));
     verify(() => mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber));
   });
 }
